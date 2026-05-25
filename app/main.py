@@ -118,8 +118,9 @@ def generate_images(request_data: StatusRequest) -> GenerationResponse:
 def home(request: Request):
     recent = store.list_recent(12)
     return templates.TemplateResponse(
-        "index.html",
-        {
+        request=request,                 # <--- ADDED THIS
+        name="index.html",               # <--- ADDED THIS
+        context={                        # <--- ADDED THIS
             "request": request,
             "app_name": settings.app_name,
             "recent_generations": recent,
@@ -136,7 +137,6 @@ def home(request: Request):
             },
         },
     )
-
 
 @app.get("/api/history")
 def history():
