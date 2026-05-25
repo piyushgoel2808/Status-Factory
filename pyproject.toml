@@ -7,7 +7,7 @@ name = "status-factory"
 version = "0.1.0"
 description = "Goel Estates WhatsApp Status generator"
 readme = "README.md"
-requires-python = ">=3.11"
+requires-python = ">=3.10"
 dependencies = [
   "fastapi>=0.115",
   "jinja2>=3.1",
