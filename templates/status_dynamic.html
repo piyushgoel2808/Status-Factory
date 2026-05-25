@@ -19,6 +19,10 @@
         color: #f7f1df;
         background: #071a33;
       }
+      .content {
+        position: relative;
+        z-index: 3;
+      }
       .bg-image {
         position: absolute;
         inset: 0;
@@ -31,37 +35,74 @@
         position: absolute;
         inset: 0;
         background:
-          linear-gradient(180deg, rgba(2, 7, 15, 0.2) 0%, rgba(2, 7, 15, 0.72) 58%, rgba(2, 7, 15, 0.92) 100%),
-          linear-gradient(120deg, rgba(7, 26, 51, 0.36) 0%, rgba(7, 26, 51, 0.18) 48%, rgba(200, 162, 74, 0.12) 100%);
+          linear-gradient(180deg, rgba(2, 7, 15, 0.12) 0%, rgba(2, 7, 15, 0.55) 46%, rgba(2, 7, 15, 0.92) 100%),
+          radial-gradient(circle at 18% 28%, rgba(7, 26, 51, 0.55), rgba(7, 26, 51, 0) 55%),
+          linear-gradient(120deg, rgba(7, 26, 51, 0.36) 0%, rgba(7, 26, 51, 0.22) 48%, rgba(200, 162, 74, 0.18) 100%);
+        z-index: 1;
+      }
+      .split-overlay {
+        position: absolute;
+        inset: 0;
+        background:
+          linear-gradient(90deg, rgba(4, 10, 18, 0.92) 0%, rgba(4, 10, 18, 0.68) 42%, rgba(4, 10, 18, 0.08) 70%, rgba(4, 10, 18, 0.02) 100%);
+        z-index: 2;
       }
       .brand-logo {
-        width: 160px;
-        height: 160px;
+        width: 140px;
+        height: 140px;
         object-fit: contain;
-        border-radius: 28px;
-        background: rgba(255, 255, 255, 0.04);
+        border-radius: 24px;
+        background: rgba(255, 255, 255, 0.06);
         box-shadow: 0 20px 55px rgba(0, 0, 0, 0.24);
+      }
+      .logo-watermark {
+        position: absolute;
+        right: 90px;
+        top: 360px;
+        width: 340px;
+        height: 340px;
+        opacity: 0.1;
+        filter: saturate(0.6) contrast(1.2);
+        pointer-events: none;
+        z-index: 2;
       }
       .top {
         position: absolute;
-        left: 0;
-        right: 0;
-        top: 86px;
-        text-align: center;
+        left: 90px;
+        right: 90px;
+        top: 78px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
       }
       .eyebrow {
-        margin-top: 18px;
-        font-size: 20px;
-        letter-spacing: 0.42em;
+        font-size: 18px;
+        letter-spacing: 0.5em;
         text-transform: uppercase;
         color: #c8a24a;
         font-weight: 700;
       }
+      .brand-stack {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+      }
+      .brand-title {
+        font-size: 36px;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+      }
       .main {
         position: absolute;
-        left: 80px;
-        right: 80px;
-        top: 460px;
+        left: 90px;
+        right: 90px;
+        top: 420px;
+      }
+      .main.asymmetric {
+        left: 90px;
+        right: 560px;
+        top: 360px;
       }
       .property-type {
         font-size: 44px;
@@ -72,7 +113,7 @@
       }
       .headline {
         margin-top: 18px;
-        font-size: 86px;
+        font-size: 92px;
         line-height: 1.04;
         font-weight: 900;
         letter-spacing: -0.03em;
@@ -80,48 +121,36 @@
       .price {
         margin-top: 24px;
         display: inline-block;
-        padding: 18px 30px;
+        padding: 22px 36px;
         border-radius: 999px;
         border: 2px solid rgba(200, 162, 74, 0.55);
         color: #fff4cf;
-        font-size: 46px;
-        font-weight: 800;
-        background: rgba(0, 0, 0, 0.16);
+        font-size: 58px;
+        font-weight: 900;
+        background: rgba(0, 0, 0, 0.22);
+        box-shadow: 0 12px 34px rgba(0, 0, 0, 0.28);
       }
       .features {
         margin-top: 36px;
-        display: flex;
-        flex-wrap: wrap;
-        gap: 16px;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
       }
       .chip {
-        padding: 18px 24px;
+        padding: 16px 22px;
         border-radius: 999px;
         background: rgba(255, 255, 255, 0.07);
         border: 1px solid rgba(200, 162, 74, 0.28);
         color: #f8f4e8;
-        font-size: 28px;
+        font-size: 26px;
         font-weight: 700;
+        text-align: center;
       }
-      .location-card {
-        margin-top: 40px;
-        padding: 26px 30px;
-        border-radius: 28px;
-        background: rgba(255, 255, 255, 0.06);
-        border: 1px solid rgba(255, 255, 255, 0.12);
+      .chip:nth-child(odd) {
+        justify-self: start;
       }
-      .location-label {
-        font-size: 18px;
-        letter-spacing: 0.34em;
-        text-transform: uppercase;
-        color: rgba(248, 241, 225, 0.65);
-        font-weight: 700;
-      }
-      .location-value {
-        margin-top: 10px;
-        font-size: 34px;
-        line-height: 1.12;
-        font-weight: 800;
+      .chip:nth-child(even) {
+        justify-self: end;
       }
       .footer {
         position: absolute;
@@ -150,6 +179,7 @@
         font-weight: 700;
         letter-spacing: 0.18em;
         text-transform: uppercase;
+        z-index: 4;
       }
     </style>
   </head>
@@ -159,15 +189,29 @@
       <img class="bg-image" src="{{ background_url }}" alt="Dynamic property background" />
       {% endif %}
       <div class="overlay"></div>
-      <div class="source-tag">{{ background_source|default('background') }}</div>
-      <div class="top">
-        {% if logo_data_uri %}
-        <img class="brand-logo" src="{{ logo_data_uri }}" alt="Goel Estates logo" />
-        {% endif %}
-        <div class="eyebrow">Goel Estates</div>
-      </div>
+      {% if layout_variant == "asymmetric" %}
+      <div class="split-overlay"></div>
+      {% endif %}
+      {% if background_source == "unsplash" %}
+      <div class="source-tag">Unsplash</div>
+      {% endif %}
 
-      <div class="main">
+      {% if logo_data_uri %}
+      <img class="logo-watermark" src="{{ logo_data_uri }}" alt="Goel Estates watermark" />
+      {% endif %}
+
+      <div class="content">
+        <div class="top">
+          <div class="brand-stack">
+            <div class="eyebrow">Goel Estates</div>
+            <div class="brand-title">Signature Listings</div>
+          </div>
+          {% if logo_data_uri %}
+          <img class="brand-logo" src="{{ logo_data_uri }}" alt="Goel Estates logo" />
+          {% endif %}
+        </div>
+
+        <div class="main{% if layout_variant == "asymmetric" %} asymmetric{% endif %}">
         <div class="property-type">{{ property_type }}</div>
         <div class="headline">{{ location }}</div>
         <div class="price">{{ price }}</div>
@@ -176,13 +220,10 @@
           <div class="chip">{{ feature }}</div>
           {% endfor %}
         </div>
-        <div class="location-card">
-          <div class="location-label">Key features</div>
-          <div class="location-value">{{ features_summary }}</div>
         </div>
-      </div>
 
-      <div class="footer">{{ contact_line }}</div>
+        <div class="footer">{{ contact_line }}</div>
+      </div>
     </div>
   </body>
 </html>

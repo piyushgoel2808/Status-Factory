@@ -105,6 +105,19 @@
               <label class="mb-2 block text-sm font-semibold text-cream/85">Key Features</label>
               <textarea name="key_features" rows="4" class="w-full rounded-2xl border border-white/10 bg-slate-950/40 px-4 py-3 text-sm text-cream outline-none transition placeholder:text-cream/35 focus:border-gold focus:ring-2 focus:ring-gold/20" placeholder="Park facing, modular kitchen, lift, stilt parking">{{ default_request.key_features }}</textarea>
             </div>
+            <div>
+              <label class="mb-2 block text-sm font-semibold text-cream/85">Layout Variant</label>
+              <div class="grid gap-3 sm:grid-cols-2">
+                <label class="flex cursor-pointer items-center justify-between rounded-2xl border border-white/10 bg-slate-950/40 px-4 py-3 text-sm text-cream transition hover:border-gold/40">
+                  <span>Balanced Editorial</span>
+                  <input type="radio" name="layout_variant" value="balanced" checked class="h-4 w-4 accent-gold" />
+                </label>
+                <label class="flex cursor-pointer items-center justify-between rounded-2xl border border-white/10 bg-slate-950/40 px-4 py-3 text-sm text-cream transition hover:border-gold/40">
+                  <span>Asymmetric Split</span>
+                  <input type="radio" name="layout_variant" value="asymmetric" class="h-4 w-4 accent-gold" />
+                </label>
+              </div>
+            </div>
             <div class="flex flex-col gap-3 sm:flex-row">
               <button type="submit" class="inline-flex items-center justify-center rounded-2xl bg-gold px-5 py-3 text-sm font-bold uppercase tracking-[0.25em] text-slate-950 transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-70">
                 Generate Statuses
@@ -237,6 +250,12 @@
             form.location.value = payload.location;
             form.price.value = payload.price;
             form.key_features.value = payload.key_features || defaultPreset.key_features;
+            if (payload.layout_variant) {
+              const match = form.querySelector(`input[name="layout_variant"][value="${payload.layout_variant}"]`);
+              if (match) {
+                match.checked = true;
+              }
+            }
             form.scrollIntoView({ behavior: 'smooth', block: 'start' });
           });
         });

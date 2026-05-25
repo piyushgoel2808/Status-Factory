@@ -18,7 +18,7 @@ class Settings:
     unsplash_access_key: str | None = os.getenv("UNSPLASH_ACCESS_KEY") or None
     outputs_dir: Path = BASE_DIR / "outputs"
     templates_dir: Path = BASE_DIR / "templates"
-    logo_path: Path = BASE_DIR / "logo.jpeg"
+    logo_path: Path = BASE_DIR / "logo1.png"
     business_card_path: Path = BASE_DIR / "bussiness card.jpeg"
     whatsapp_reference_path: Path = BASE_DIR / "WhatsApp Image 2026-05-25 at 10.33.25 PM.jpeg"
     whatsapp_reference_alt_path: Path = BASE_DIR / "WhatsApp Image 2026-05-25 at 10.33.25 PM (1).jpeg"

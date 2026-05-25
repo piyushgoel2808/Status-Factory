@@ -58,6 +58,7 @@ def generate_images(request_data: StatusRequest) -> GenerationResponse:
         "features_summary": " | ".join(features) if features else "Available on request",
         "contact_line": "CONTACT NAVNEET GOEL | 7042636062 | 9999731256 | BANK FINANCE FACILITY AVAILABLE",
         "logo_data_uri": file_to_data_uri(settings.logo_path),
+        "layout_variant": request_data.layout_variant,
         "brand_gold": "#c8a24a",
         "brand_navy": "#071a33",
         "rendered_at": now_utc().isoformat(),
@@ -148,6 +149,7 @@ def generate_status(
     location: str = Form(...),
     price: str = Form(...),
     key_features: str = Form(""),
+    layout_variant: str = Form("balanced"),
 ):
     try:
         request_data = StatusRequest.model_validate(
@@ -156,6 +158,7 @@ def generate_status(
                 "location": location.strip(),
                 "price": price.strip(),
                 "key_features": key_features.strip(),
+                "layout_variant": layout_variant.strip() or "balanced",
             }
         )
     except Exception as exc:
