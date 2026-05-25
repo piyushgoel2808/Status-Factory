@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Goel Estates Status Static</title>
+    <style>
+      html, body {
+        margin: 0;
+        width: 1080px;
+        height: 1920px;
+        overflow: hidden;
+        background: #071a33;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+      .canvas {
+        position: relative;
+        width: 1080px;
+        height: 1920px;
+        color: #f7f1df;
+        background:
+          radial-gradient(circle at top left, rgba(200, 162, 74, 0.16), transparent 30%),
+          radial-gradient(circle at bottom right, rgba(255, 255, 255, 0.05), transparent 24%),
+          linear-gradient(180deg, #081e3b 0%, #051122 100%);
+      }
+      .accent-line {
+        position: absolute;
+        left: 80px;
+        right: 80px;
+        top: -42px;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, rgba(200, 162, 74, 0.95), transparent);
+      }
+      .brand-logo {
+        width: 160px;
+        height: 160px;
+        object-fit: contain;
+        border-radius: 28px;
+        background: rgba(255, 255, 255, 0.04);
+        box-shadow: 0 20px 55px rgba(0, 0, 0, 0.24);
+      }
+      .top {
+        padding-top: 86px;
+        text-align: center;
+      }
+      .eyebrow {
+        margin-top: 18px;
+        font-size: 20px;
+        letter-spacing: 0.42em;
+        text-transform: uppercase;
+        color: #c8a24a;
+        font-weight: 700;
+      }
+      .main {
+        position: absolute;
+        left: 80px;
+        right: 80px;
+        top: 460px;
+      }
+      .property-type {
+        font-size: 44px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #c8a24a;
+        font-weight: 800;
+      }
+      .headline {
+        margin-top: 18px;
+        font-size: 86px;
+        line-height: 1.04;
+        font-weight: 900;
+        letter-spacing: -0.03em;
+      }
+      .price {
+        margin-top: 24px;
+        display: inline-block;
+        padding: 18px 30px;
+        border-radius: 999px;
+        border: 2px solid rgba(200, 162, 74, 0.55);
+        color: #fff4cf;
+        font-size: 46px;
+        font-weight: 800;
+        background: rgba(0, 0, 0, 0.14);
+      }
+      .features {
+        margin-top: 36px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+      }
+      .chip {
+        padding: 18px 24px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.07);
+        border: 1px solid rgba(200, 162, 74, 0.28);
+        color: #f8f4e8;
+        font-size: 28px;
+        font-weight: 700;
+      }
+      .location-card {
+        margin-top: 40px;
+        padding: 26px 30px;
+        border-radius: 28px;
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+      }
+      .location-label {
+        font-size: 18px;
+        letter-spacing: 0.34em;
+        text-transform: uppercase;
+        color: rgba(248, 241, 225, 0.65);
+        font-weight: 700;
+      }
+      .location-value {
+        margin-top: 10px;
+        font-size: 34px;
+        line-height: 1.12;
+        font-weight: 800;
+      }
+      .footer {
+        position: absolute;
+        left: 56px;
+        right: 56px;
+        bottom: 58px;
+        padding: 22px 26px;
+        border-radius: 22px;
+        background: rgba(0, 0, 0, 0.22);
+        border: 1px solid rgba(200, 162, 74, 0.22);
+        text-align: center;
+        font-size: 24px;
+        line-height: 1.5;
+        font-weight: 700;
+        letter-spacing: 0.02em;
+      }
+      .subtle-grid {
+        position: absolute;
+        inset: 0;
+        background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+        background-size: 110px 110px;
+        opacity: 0.22;
+        pointer-events: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="canvas">
+      <div class="subtle-grid"></div>
+      <div class="top">
+        {% if logo_data_uri %}
+        <img class="brand-logo" src="{{ logo_data_uri }}" alt="Goel Estates logo" />
+        {% endif %}
+        <div class="eyebrow">Goel Estates</div>
+      </div>
+
+      <div class="main">
+        <div class="accent-line"></div>
+        <div class="property-type">{{ property_type }}</div>
+        <div class="headline">{{ location }}</div>
+        <div class="price">{{ price }}</div>
+        <div class="features">
+          {% for feature in features %}
+          <div class="chip">{{ feature }}</div>
+          {% endfor %}
+        </div>
+        <div class="location-card">
+          <div class="location-label">Key features</div>
+          <div class="location-value">{{ features_summary }}</div>
+        </div>
+      </div>
+
+      <div class="footer">{{ contact_line }}</div>
+    </div>
+  </body>
+</html>
