@@ -1,5 +1,5 @@
 # 1. Use the official Microsoft Playwright image (Browser is already installed!)
-FROM mcr.microsoft.com/playwright/python:v1.40.0-jammy
+FROM mcr.microsoft.com/playwright/python:v1.60.0-jammy
 
 # 2. Set environment variables
 ENV PYTHONDONTWRITEBYTECODE=1 \
