@@ -10,18 +10,18 @@ WORKDIR /app
 # 3. Copy your project configuration files first
 COPY pyproject.toml README.md ./
 
-# 4. Install your Python packages (no need to install Playwright browsers here)
+# 4. Install your Python packages
 RUN pip install --no-cache-dir .
 
 # 5. Copy your application code
 COPY app ./app
 COPY templates ./templates
 
-# 6. Copy your brand assets
+# 6. Copy your brand assets (Fixed syntax for files with spaces)
 COPY logo.jpeg ./
-COPY "bussiness card.jpeg" ./
-COPY "WhatsApp Image 2026-05-25 at 10.33.25 PM.jpeg" ./
-COPY "WhatsApp Image 2026-05-25 at 10.33.25 PM (1).jpeg" ./
+COPY ["bussiness card.jpeg", "./"]
+COPY ["WhatsApp Image 2026-05-25 at 10.33.25 PM.jpeg", "./"]
+COPY ["WhatsApp Image 2026-05-25 at 10.33.25 PM (1).jpeg", "./"]
 
 # 7. Expose the port
 EXPOSE 8000
