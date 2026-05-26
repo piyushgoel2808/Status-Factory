@@ -2,7 +2,7 @@ Metadata-Version: 2.4
 Name: status-factory
 Version: 0.1.0
 Summary: Goel Estates WhatsApp Status generator
-Requires-Python: >=3.11
+Requires-Python: >=3.10
 Description-Content-Type: text/markdown
 Requires-Dist: fastapi>=0.115
 Requires-Dist: jinja2>=3.1
@@ -10,6 +10,7 @@ Requires-Dist: playwright>=1.46
 Requires-Dist: python-multipart>=0.0.9
 Requires-Dist: requests>=2.32
 Requires-Dist: uvicorn[standard]>=0.30
+Requires-Dist: python-dotenv>=1.0.0
 
 # Status Factory
 

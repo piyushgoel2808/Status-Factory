@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import time
 from dataclasses import dataclass
 from typing import Iterable
 
@@ -8,6 +9,9 @@ import requests
 from app.core.config import settings, svg_fallback_data_uri
 from app.models.schemas import BackgroundAsset
 
+# Simple cache to prevent exhausting Unsplash API limits during live previews
+_asset_cache: dict[str, tuple[float, BackgroundAsset]] = {}
+CACHE_TTL = 300  # 5 minutes
 
 @dataclass(frozen=True)
 class UnsplashResult:
@@ -29,6 +33,12 @@ def fetch_background_asset(queries: Iterable[str] | None = None) -> BackgroundAs
     available_queries = tuple(queries or settings.unsplash_queries)
     if not settings.unsplash_access_key:
         return _build_fallback(available_queries[0], "missing_api_key")
+
+    cache_key = ":".join(available_queries)
+    if cache_key in _asset_cache:
+        timestamp, cached_asset = _asset_cache[cache_key]
+        if time.time() - timestamp < CACHE_TTL:
+            return cached_asset
 
     last_error: str | None = None
     for query in available_queries:
@@ -54,13 +64,17 @@ def fetch_background_asset(queries: Iterable[str] | None = None) -> BackgroundAs
             image_url = urls.get("full") or urls.get("regular") or urls.get("raw")
             if not image_url:
                 raise ValueError("Unsplash response missing image URL")
-            return BackgroundAsset(
+            
+            asset = BackgroundAsset(
                 source="unsplash",
                 query=query,
                 url=image_url,
                 photographer=user.get("name"),
                 credit_url=links.get("html"),
             )
+            # Store in cache
+            _asset_cache[cache_key] = (time.time(), asset)
+            return asset
         except Exception as exc:  # pragma: no cover - network fallback
             last_error = str(exc)
 

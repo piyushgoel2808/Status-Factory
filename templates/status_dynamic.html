@@ -8,21 +8,22 @@
       :root {
         --scale-global: {{ scale_global | default(1.0) }};
         --scale-logo: {{ scale_logo | default(1.0) }};
+        --scale-brand: {{ scale_brand | default(1.0) }};
         --scale-header: {{ scale_header | default(1.0) }};
         --scale-text: {{ scale_text | default(1.0) }};
         --scale-footer: {{ scale_footer | default(1.0) }};
       }
       html, body {
         margin: 0;
-        width: 1080px;
-        height: 1920px;
+        width: {{ width }}px;
+        height: {{ height }}px;
         overflow: hidden;
         font-family: Arial, Helvetica, sans-serif;
       }
       .canvas {
         position: relative;
-        width: 1080px;
-        height: 1920px;
+        width: {{ width }}px;
+        height: {{ height }}px;
         color: #f7f1df;
         background: #071a33;
       }
@@ -83,7 +84,7 @@
         justify-content: space-between;
       }
       .eyebrow {
-        font-size: calc(22px * var(--scale-global) * var(--scale-header));
+        font-size: calc(28px * var(--scale-global) * var(--scale-brand));
         letter-spacing: 0.5em;
         text-transform: uppercase;
         color: #c8a24a;
@@ -96,7 +97,7 @@
         gap: calc(12px * var(--scale-global));
       }
       .brand-title {
-        font-size: calc(44px * var(--scale-global) * var(--scale-header));
+        font-size: calc(48px * var(--scale-global) * var(--scale-brand));
         font-weight: 800;
         letter-spacing: 0.08em;
       }

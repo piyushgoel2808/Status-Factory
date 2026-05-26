@@ -6,6 +6,12 @@ pyproject.toml
 ./app/services/render.py
 ./app/services/storage.py
 ./app/services/unsplash.py
+app/main.py
+app/core/config.py
+app/models/schemas.py
+app/services/render.py
+app/services/storage.py
+app/services/unsplash.py
 status_factory.egg-info/PKG-INFO
 status_factory.egg-info/SOURCES.txt
 status_factory.egg-info/dependency_links.txt

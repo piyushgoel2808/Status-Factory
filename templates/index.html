@@ -36,7 +36,7 @@
     </style>
   </head>
   <body class="min-h-screen text-cream">
-    <main class="mx-auto flex min-h-screen w-full max-w-6xl flex-col gap-6 px-4 py-4 sm:px-6 lg:px-8">
+    <main class="mx-auto flex min-h-screen w-full max-w-[1400px] flex-col gap-6 px-4 py-4 sm:px-6 lg:px-8">
       <section class="glass-panel status-shadow rounded-[28px] p-5 sm:p-7">
         <div class="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
           <div class="max-w-2xl space-y-3">
@@ -48,48 +48,30 @@
               Instantly generate WhatsApp Status images for property listings.
             </h1>
             <p class="max-w-2xl text-sm leading-6 text-cream/78 sm:text-base">
-              Add the property details once, then create two ready-to-post 1080×1920 status creatives with the Goel Estates navy-and-gold identity.
+              Add the property details once, then create ready-to-post creatives with the Goel Estates identity.
             </p>
-          </div>
-          <div class="grid gap-3 sm:grid-cols-3 lg:w-[390px]">
-            <div class="rounded-2xl border border-white/10 bg-white/5 p-3">
-              <p class="text-[11px] uppercase tracking-[0.3em] text-cream/55">Format</p>
-              <p class="mt-1 text-sm font-semibold">WhatsApp Portrait</p>
-            </div>
-            <div class="rounded-2xl border border-white/10 bg-white/5 p-3">
-              <p class="text-[11px] uppercase tracking-[0.3em] text-cream/55">Canvas</p>
-              <p class="mt-1 text-sm font-semibold">1080 × 1920</p>
-            </div>
-            <div class="rounded-2xl border border-white/10 bg-white/5 p-3">
-              <p class="text-[11px] uppercase tracking-[0.3em] text-cream/55">Output</p>
-              <p class="mt-1 text-sm font-semibold">Static + Dynamic</p>
-            </div>
           </div>
         </div>
       </section>
 
-      <section class="grid gap-5 lg:grid-cols-[1.05fr_0.95fr]">
+      <section class="grid gap-5 lg:grid-cols-[1fr_400px]">
         <div class="glass-panel status-shadow rounded-[28px] p-5 sm:p-7">
           <div class="mb-4 flex items-center justify-between">
             <div>
-              <h2 class="text-xl font-bold text-cream">Create a new status set</h2>
-              <p class="mt-1 text-sm text-cream/65">Use concise details and comma-separated features for the cleanest output.</p>
-            </div>
-            <div class="hidden items-center gap-3 sm:flex">
-              {% if logo_data_uri %}
-              <img src="{{ logo_data_uri }}" alt="Goel Estates logo" class="h-14 w-14 rounded-2xl object-cover ring-1 ring-gold/30" />
-              {% endif %}
+              <h2 class="text-xl font-bold text-cream">Property Details</h2>
+              <p class="mt-1 text-sm text-cream/65">Use concise details and comma-separated features.</p>
             </div>
           </div>
 
           <form id="status-form" class="space-y-4">
             <div>
               <label for="property_type" class="mb-2 block text-sm font-semibold text-cream/85">Property Type</label>
-              <select id="property_type" name="property_type" aria-label="Property Type" class="w-full rounded-2xl border border-white/10 bg-slate-950/40 px-4 py-3 text-sm text-cream outline-none transition focus:border-gold focus:ring-2 focus:ring-gold/20">
-                <option value="Kothi">Kothi</option>
-                <option value="Builder Floor" selected>Builder Floor</option>
-                <option value="DDA Flat">DDA Flat</option>
-              </select>
+              <input list="property_types" id="property_type" name="property_type" value="{{ default_request.property_type }}" aria-label="Property Type" class="w-full rounded-2xl border border-white/10 bg-slate-950/40 px-4 py-3 text-sm text-cream outline-none transition focus:border-gold focus:ring-2 focus:ring-gold/20" placeholder="Select or type custom (e.g. Farmhouse)" />
+              <datalist id="property_types">
+                <option value="Kothi"></option>
+                <option value="Builder Floor"></option>
+                <option value="DDA Flat"></option>
+              </datalist>
             </div>
             <div class="grid gap-4 sm:grid-cols-2">
               <div>
@@ -105,6 +87,28 @@
               <label class="mb-2 block text-sm font-semibold text-cream/85">Key Features</label>
               <textarea name="key_features" rows="4" class="w-full rounded-2xl border border-white/10 bg-slate-950/40 px-4 py-3 text-sm text-cream outline-none transition placeholder:text-cream/35 focus:border-gold focus:ring-2 focus:ring-gold/20" placeholder="Park facing, modular kitchen, lift, stilt parking">{{ default_request.key_features }}</textarea>
             </div>
+            <div class="grid gap-4 md:grid-cols-2">
+              <div>
+                <label class="mb-2 block text-sm font-semibold text-cream/85">Canvas Format</label>
+                <select name="canvas_format" class="w-full rounded-2xl border border-white/10 bg-slate-950/40 px-4 py-3 text-sm text-cream outline-none transition focus:border-gold focus:ring-2 focus:ring-gold/20" onchange="toggleCustomSize(this.value)">
+                  <option value="whatsapp" selected>WhatsApp Portrait (1080x1920)</option>
+                  <option value="instagram_square">Instagram Square (1080x1080)</option>
+                  <option value="instagram_portrait">Instagram Portrait (1080x1350)</option>
+                  <option value="custom">Custom Dimensions</option>
+                </select>
+              </div>
+              <div id="custom-dimensions" class="hidden grid-cols-2 gap-3">
+                <div>
+                  <label class="mb-2 block text-sm font-semibold text-cream/85">Width</label>
+                  <input type="number" name="custom_width" value="1080" class="w-full rounded-2xl border border-white/10 bg-slate-950/40 px-4 py-3 text-sm text-cream outline-none transition placeholder:text-cream/35 focus:border-gold focus:ring-2 focus:ring-gold/20" />
+                </div>
+                <div>
+                  <label class="mb-2 block text-sm font-semibold text-cream/85">Height</label>
+                  <input type="number" name="custom_height" value="1920" class="w-full rounded-2xl border border-white/10 bg-slate-950/40 px-4 py-3 text-sm text-cream outline-none transition placeholder:text-cream/35 focus:border-gold focus:ring-2 focus:ring-gold/20" />
+                </div>
+              </div>
+            </div>
+
             <div>
               <label class="mb-2 block text-sm font-semibold text-cream/85">Layout Variant</label>
               <div class="grid gap-3 sm:grid-cols-2">
@@ -127,19 +131,23 @@
                   <input type="range" name="scale_global" min="0.5" max="2.0" step="0.05" value="{{ default_request.scale_global }}" class="w-full accent-gold" oninput="document.getElementById('scale_global_val').innerText=Number(this.value).toFixed(2)">
                 </div>
                 <div>
-                  <label class="mb-1 flex justify-between text-[11px] uppercase tracking-[0.2em] text-cream/55"><span>Logo Scale</span><span id="scale_logo_val">1.0</span></label>
+                  <label class="mb-1 flex justify-between text-[11px] uppercase tracking-[0.2em] text-cream/55"><span>Logo Scale</span><span id="scale_logo_val">{{ default_request.scale_logo }}</span></label>
                   <input type="range" name="scale_logo" min="0.5" max="2.0" step="0.05" value="{{ default_request.scale_logo }}" class="w-full accent-gold" oninput="document.getElementById('scale_logo_val').innerText=Number(this.value).toFixed(2)">
                 </div>
                 <div>
-                  <label class="mb-1 flex justify-between text-[11px] uppercase tracking-[0.2em] text-cream/55"><span>Header / Title</span><span id="scale_header_val">1.0</span></label>
+                  <label class="mb-1 flex justify-between text-[11px] uppercase tracking-[0.2em] text-cream/55"><span>Brand Name</span><span id="scale_brand_val">{{ default_request.scale_brand }}</span></label>
+                  <input type="range" name="scale_brand" min="0.5" max="2.0" step="0.05" value="{{ default_request.scale_brand }}" class="w-full accent-gold" oninput="document.getElementById('scale_brand_val').innerText=Number(this.value).toFixed(2)">
+                </div>
+                <div>
+                  <label class="mb-1 flex justify-between text-[11px] uppercase tracking-[0.2em] text-cream/55"><span>Header / Title</span><span id="scale_header_val">{{ default_request.scale_header }}</span></label>
                   <input type="range" name="scale_header" min="0.5" max="2.0" step="0.05" value="{{ default_request.scale_header }}" class="w-full accent-gold" oninput="document.getElementById('scale_header_val').innerText=Number(this.value).toFixed(2)">
                 </div>
                 <div>
-                  <label class="mb-1 flex justify-between text-[11px] uppercase tracking-[0.2em] text-cream/55"><span>Content Text</span><span id="scale_text_val">1.0</span></label>
+                  <label class="mb-1 flex justify-between text-[11px] uppercase tracking-[0.2em] text-cream/55"><span>Content Text</span><span id="scale_text_val">{{ default_request.scale_text }}</span></label>
                   <input type="range" name="scale_text" min="0.5" max="2.0" step="0.05" value="{{ default_request.scale_text }}" class="w-full accent-gold" oninput="document.getElementById('scale_text_val').innerText=Number(this.value).toFixed(2)">
                 </div>
                 <div>
-                  <label class="mb-1 flex justify-between text-[11px] uppercase tracking-[0.2em] text-cream/55"><span>Footer Scale</span><span id="scale_footer_val">1.0</span></label>
+                  <label class="mb-1 flex justify-between text-[11px] uppercase tracking-[0.2em] text-cream/55"><span>Footer Scale</span><span id="scale_footer_val">{{ default_request.scale_footer }}</span></label>
                   <input type="range" name="scale_footer" min="0.5" max="2.0" step="0.05" value="{{ default_request.scale_footer }}" class="w-full accent-gold" oninput="document.getElementById('scale_footer_val').innerText=Number(this.value).toFixed(2)">
                 </div>
               </div>
@@ -157,23 +165,23 @@
           <div id="feedback" class="mt-4 hidden rounded-2xl border border-gold/20 bg-gold/10 px-4 py-3 text-sm text-gold"></div>
         </div>
 
-        <div class="glass-panel status-shadow rounded-[28px] p-5 sm:p-7">
-          <h2 class="text-xl font-bold text-cream">Brand references</h2>
-          <p class="mt-1 text-sm text-cream/65">The local assets below guide the Goel Estates look and feel.</p>
-          <div class="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-2">
-            {% if business_card_data_uri %}
-            <figure class="overflow-hidden rounded-3xl border border-white/10 bg-slate-950/40">
-              <img src="{{ business_card_data_uri }}" alt="Business card reference" class="h-52 w-full object-cover" />
-              <figcaption class="px-4 py-3 text-xs uppercase tracking-[0.25em] text-cream/55">Business card reference</figcaption>
-            </figure>
-            {% endif %}
-            {% if whatsapp_reference_data_uri %}
-            <figure class="overflow-hidden rounded-3xl border border-white/10 bg-slate-950/40">
-              <img src="{{ whatsapp_reference_data_uri }}" alt="WhatsApp reference" class="h-52 w-full object-cover" />
-              <figcaption class="px-4 py-3 text-xs uppercase tracking-[0.25em] text-cream/55">WhatsApp reference</figcaption>
-            </figure>
-            {% endif %}
+        <div class="glass-panel status-shadow flex flex-col rounded-[28px] overflow-hidden">
+          <div class="flex items-center justify-between border-b border-white/10 bg-slate-950/40 p-4">
+            <h2 class="text-sm font-bold text-cream">Live Preview</h2>
+            <div class="flex gap-2">
+              <button type="button" onclick="setPreviewKind('static')" id="btn-preview-static" class="rounded-xl border border-gold/30 bg-gold/10 px-3 py-1.5 text-xs font-semibold text-gold transition hover:bg-gold/20">Static</button>
+              <button type="button" onclick="setPreviewKind('dynamic')" id="btn-preview-dynamic" class="rounded-xl border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-semibold text-cream transition hover:bg-white/10">Dynamic</button>
+            </div>
           </div>
+          <div class="relative flex-grow bg-black/50 p-4 flex items-center justify-center overflow-hidden">
+            <div id="preview-container" class="relative shadow-2xl ring-1 ring-white/10 transition-all duration-300" style="width: 100%; aspect-ratio: 1080/1920;">
+              <iframe id="preview-frame" class="w-full h-full border-0 pointer-events-none transform origin-top-left" srcdoc=""></iframe>
+            </div>
+            <div id="preview-loading" class="absolute inset-0 z-10 flex items-center justify-center bg-black/60 hidden">
+              <p class="text-xs uppercase tracking-[0.2em] text-gold animate-pulse">Updating...</p>
+            </div>
+          </div>
+          <input type="hidden" id="preview-kind" value="static" />
         </div>
       </section>
 
@@ -223,6 +231,84 @@
       const feedback = document.getElementById("feedback");
       const captionPanel = document.getElementById("caption-panel");
       const captionText = document.getElementById("caption-text");
+      const previewFrame = document.getElementById("preview-frame");
+      const previewKind = document.getElementById("preview-kind");
+      const previewLoading = document.getElementById("preview-loading");
+      const previewContainer = document.getElementById("preview-container");
+      
+      let previewDebounceTimer;
+
+      function toggleCustomSize(val) {
+        const customDiv = document.getElementById('custom-dimensions');
+        if (val === 'custom') {
+          customDiv.classList.remove('hidden');
+          customDiv.classList.add('grid');
+        } else {
+          customDiv.classList.add('hidden');
+          customDiv.classList.remove('grid');
+        }
+        updatePreview();
+      }
+
+      function setPreviewKind(kind) {
+        previewKind.value = kind;
+        if (kind === 'static') {
+          document.getElementById('btn-preview-static').className = "rounded-xl border border-gold/30 bg-gold/10 px-3 py-1.5 text-xs font-semibold text-gold transition hover:bg-gold/20";
+          document.getElementById('btn-preview-dynamic').className = "rounded-xl border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-semibold text-cream transition hover:bg-white/10";
+        } else {
+          document.getElementById('btn-preview-dynamic').className = "rounded-xl border border-gold/30 bg-gold/10 px-3 py-1.5 text-xs font-semibold text-gold transition hover:bg-gold/20";
+          document.getElementById('btn-preview-static').className = "rounded-xl border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-semibold text-cream transition hover:bg-white/10";
+        }
+        updatePreview();
+      }
+
+      async function updatePreview() {
+        clearTimeout(previewDebounceTimer);
+        previewDebounceTimer = setTimeout(async () => {
+          previewLoading.classList.remove('hidden');
+          const formData = new FormData(form);
+          formData.append('kind', previewKind.value);
+          
+          let w = 1080;
+          let h = 1920;
+          const format = formData.get('canvas_format');
+          if (format === 'instagram_square') h = 1080;
+          else if (format === 'instagram_portrait') h = 1350;
+          else if (format === 'custom') {
+            w = parseInt(formData.get('custom_width')) || 1080;
+            h = parseInt(formData.get('custom_height')) || 1920;
+          }
+          previewContainer.style.aspectRatio = `${w}/${h}`;
+          
+          try {
+            const response = await fetch('/preview-html', {
+              method: 'POST',
+              body: formData,
+            });
+            if (response.ok) {
+              const html = await response.text();
+              const containerWidth = previewContainer.clientWidth;
+              const scale = containerWidth / w;
+              
+              const baseHtml = html.replace('</head>', `<style>
+                html { transform: scale(${scale}); transform-origin: top left; width: ${w}px; height: ${h}px; overflow: hidden; background: transparent !important; }
+                body { min-height: 100vh; background: transparent !important; }
+              </style></head>`);
+              
+              previewFrame.srcdoc = baseHtml;
+            }
+          } catch (e) {
+            console.error('Preview update failed', e);
+          } finally {
+            previewLoading.classList.add('hidden');
+          }
+        }, 400); // 400ms debounce
+      }
+
+      form.addEventListener('input', updatePreview);
+      // Execute initial preview
+      updatePreview();
+      window.addEventListener('resize', updatePreview);
 
       const escapeHtml = (value) => String(value)
         .replaceAll("&", "&amp;")
@@ -283,11 +369,23 @@
               }
             }
             
+            if (payload.canvas_format) {
+              form.canvas_format.value = payload.canvas_format;
+              toggleCustomSize(payload.canvas_format);
+            }
+            if (payload.custom_width) form.custom_width.value = payload.custom_width;
+            if (payload.custom_height) form.custom_height.value = payload.custom_height;
+            
             form.scale_global.value = payload.scale_global || 1.0;
             document.getElementById('scale_global_val').innerText = Number(form.scale_global.value).toFixed(2);
             
-            form.scale_logo.value = payload.scale_logo || 1.0;
+            form.scale_logo.value = payload.scale_logo || 1.65;
             document.getElementById('scale_logo_val').innerText = Number(form.scale_logo.value).toFixed(2);
+            
+            form.scale_brand.value = payload.scale_brand || 1.0;
+            if (document.getElementById('scale_brand_val')) {
+              document.getElementById('scale_brand_val').innerText = Number(form.scale_brand.value).toFixed(2);
+            }
             
             form.scale_header.value = payload.scale_header || 1.0;
             document.getElementById('scale_header_val').innerText = Number(form.scale_header.value).toFixed(2);
@@ -314,8 +412,13 @@
         form.scale_global.value = defaultPreset.scale_global || 1.0;
         document.getElementById('scale_global_val').innerText = Number(form.scale_global.value).toFixed(2);
         
-        form.scale_logo.value = defaultPreset.scale_logo || 1.0;
+        form.scale_logo.value = defaultPreset.scale_logo || 1.65;
         document.getElementById('scale_logo_val').innerText = Number(form.scale_logo.value).toFixed(2);
+        
+        form.scale_brand.value = defaultPreset.scale_brand || 1.0;
+        if (document.getElementById('scale_brand_val')) {
+          document.getElementById('scale_brand_val').innerText = Number(form.scale_brand.value).toFixed(2);
+        }
         
         form.scale_header.value = defaultPreset.scale_header || 1.0;
         document.getElementById('scale_header_val').innerText = Number(form.scale_header.value).toFixed(2);
@@ -325,6 +428,11 @@
         
         form.scale_footer.value = defaultPreset.scale_footer || 1.0;
         document.getElementById('scale_footer_val').innerText = Number(form.scale_footer.value).toFixed(2);
+        
+        form.canvas_format.value = defaultPreset.canvas_format || 'whatsapp';
+        toggleCustomSize(form.canvas_format.value);
+
+        updatePreview();
         
         showFeedback('Preset restored. Update the details and generate again.');
       });

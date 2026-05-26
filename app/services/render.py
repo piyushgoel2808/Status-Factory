@@ -21,12 +21,12 @@ class RenderService:
         template = self.environment.get_template(template_name)
         return template.render(**context)
 
-    def capture_jpeg(self, html: str, output_path: Path) -> None:
+    def capture_jpeg(self, html: str, output_path: Path, width: int = 1080, height: int = 1920) -> None:
         output_path.parent.mkdir(parents=True, exist_ok=True)
         with sync_playwright() as playwright:
             browser = playwright.chromium.launch(headless=True, args=["--disable-dev-shm-usage"])
             try:
-                page = browser.new_page(viewport={"width": 1080, "height": 1920}, device_scale_factor=1)
+                page = browser.new_page(viewport={"width": width, "height": height}, device_scale_factor=1)
                 page.set_content(html, wait_until="networkidle")
                 page.screenshot(path=str(output_path), type="jpeg", quality=94, full_page=False)
             finally:
