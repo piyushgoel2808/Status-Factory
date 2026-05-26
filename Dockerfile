@@ -18,7 +18,8 @@ COPY app ./app
 COPY templates ./templates
 
 # 6. Copy your brand assets (Fixed syntax for files with spaces)
-COPY logo.jpeg ./
+COPY logo1.png ./
+COPY logo2.png ./
 COPY ["bussiness card.jpeg", "./"]
 COPY ["WhatsApp Image 2026-05-25 at 10.33.25 PM.jpeg", "./"]
 COPY ["WhatsApp Image 2026-05-25 at 10.33.25 PM (1).jpeg", "./"]
