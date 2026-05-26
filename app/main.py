@@ -59,6 +59,11 @@ def generate_images(request_data: StatusRequest) -> GenerationResponse:
         "contact_line": "CONTACT NAVNEET GOEL | 7042636062 | 9999731256 | BANK FINANCE FACILITY AVAILABLE",
         "logo_data_uri": file_to_data_uri(settings.logo_path),
         "layout_variant": request_data.layout_variant,
+        "scale_global": request_data.scale_global,
+        "scale_logo": request_data.scale_logo,
+        "scale_header": request_data.scale_header,
+        "scale_text": request_data.scale_text,
+        "scale_footer": request_data.scale_footer,
         "brand_gold": "#c8a24a",
         "brand_navy": "#071a33",
         "rendered_at": now_utc().isoformat(),
@@ -134,6 +139,11 @@ def home(request: Request):
                 "location": "South Delhi",
                 "price": "₹2.85 Cr",
                 "key_features": "Park facing, modular kitchen, lift, stilt parking",
+                "scale_global": 1.0,
+                "scale_logo": 1.0,
+                "scale_header": 1.0,
+                "scale_text": 1.0,
+                "scale_footer": 1.0,
             },
         },
     )
@@ -150,6 +160,11 @@ def generate_status(
     price: str = Form(...),
     key_features: str = Form(""),
     layout_variant: str = Form("balanced"),
+    scale_global: float = Form(1.0),
+    scale_logo: float = Form(1.0),
+    scale_header: float = Form(1.0),
+    scale_text: float = Form(1.0),
+    scale_footer: float = Form(1.0),
 ):
     try:
         request_data = StatusRequest.model_validate(
@@ -159,6 +174,11 @@ def generate_status(
                 "price": price.strip(),
                 "key_features": key_features.strip(),
                 "layout_variant": layout_variant.strip() or "balanced",
+                "scale_global": scale_global,
+                "scale_logo": scale_logo,
+                "scale_header": scale_header,
+                "scale_text": scale_text,
+                "scale_footer": scale_footer,
             }
         )
     except Exception as exc:

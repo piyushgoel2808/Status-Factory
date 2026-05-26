@@ -12,6 +12,11 @@ class StatusRequest(BaseModel):
     price: str = Field(min_length=1, max_length=80)
     key_features: str = Field(default="", max_length=400)
     layout_variant: Literal["balanced", "asymmetric"] = "balanced"
+    scale_global: float = 1.0
+    scale_logo: float = 1.0
+    scale_header: float = 1.0
+    scale_text: float = 1.0
+    scale_footer: float = 1.0
 
 
 class GeneratedImage(BaseModel):

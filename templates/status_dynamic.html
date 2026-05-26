@@ -5,6 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Goel Estates Status Dynamic</title>
     <style>
+      :root {
+        --scale-global: {{ scale_global | default(1.0) }};
+        --scale-logo: {{ scale_logo | default(1.0) }};
+        --scale-header: {{ scale_header | default(1.0) }};
+        --scale-text: {{ scale_text | default(1.0) }};
+        --scale-footer: {{ scale_footer | default(1.0) }};
+      }
       html, body {
         margin: 0;
         width: 1080px;
@@ -48,8 +55,8 @@
         z-index: 2;
       }
       .brand-logo {
-        width: 140px;
-        height: 140px;
+        width: calc(180px * var(--scale-global) * var(--scale-logo));
+        height: calc(180px * var(--scale-global) * var(--scale-logo));
         object-fit: contain;
         border-radius: 24px;
         background: rgba(255, 255, 255, 0.06);
@@ -76,7 +83,7 @@
         justify-content: space-between;
       }
       .eyebrow {
-        font-size: 18px;
+        font-size: calc(22px * var(--scale-global) * var(--scale-header));
         letter-spacing: 0.5em;
         text-transform: uppercase;
         color: #c8a24a;
@@ -86,10 +93,10 @@
         display: flex;
         flex-direction: column;
         align-items: flex-start;
-        gap: 12px;
+        gap: calc(12px * var(--scale-global));
       }
       .brand-title {
-        font-size: 36px;
+        font-size: calc(44px * var(--scale-global) * var(--scale-header));
         font-weight: 800;
         letter-spacing: 0.08em;
       }
@@ -105,44 +112,44 @@
         top: 360px;
       }
       .property-type {
-        font-size: 44px;
+        font-size: calc(52px * var(--scale-global) * var(--scale-text));
         letter-spacing: 0.08em;
         text-transform: uppercase;
         color: #c8a24a;
         font-weight: 800;
       }
       .headline {
-        margin-top: 18px;
-        font-size: 92px;
+        margin-top: calc(18px * var(--scale-global));
+        font-size: calc(100px * var(--scale-global) * var(--scale-header));
         line-height: 1.04;
         font-weight: 900;
         letter-spacing: -0.03em;
       }
       .price {
-        margin-top: 24px;
+        margin-top: calc(24px * var(--scale-global));
         display: inline-block;
-        padding: 22px 36px;
+        padding: calc(22px * var(--scale-global)) calc(36px * var(--scale-global));
         border-radius: 999px;
         border: 2px solid rgba(200, 162, 74, 0.55);
         color: #fff4cf;
-        font-size: 58px;
+        font-size: calc(64px * var(--scale-global) * var(--scale-text));
         font-weight: 900;
         background: rgba(0, 0, 0, 0.22);
         box-shadow: 0 12px 34px rgba(0, 0, 0, 0.28);
       }
       .features {
-        margin-top: 36px;
+        margin-top: calc(36px * var(--scale-global));
         display: grid;
         grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 14px;
+        gap: calc(14px * var(--scale-global));
       }
       .chip {
-        padding: 16px 22px;
+        padding: calc(16px * var(--scale-global)) calc(22px * var(--scale-global));
         border-radius: 999px;
         background: rgba(255, 255, 255, 0.07);
         border: 1px solid rgba(200, 162, 74, 0.28);
         color: #f8f4e8;
-        font-size: 26px;
+        font-size: calc(32px * var(--scale-global) * var(--scale-text));
         font-weight: 700;
         text-align: center;
       }
@@ -157,14 +164,15 @@
         left: 56px;
         right: 56px;
         bottom: 58px;
-        padding: 22px 26px;
+        padding: calc(22px * var(--scale-global)) calc(26px * var(--scale-global));
         border-radius: 22px;
         background: rgba(0, 0, 0, 0.24);
         border: 1px solid rgba(200, 162, 74, 0.22);
         text-align: center;
-        font-size: 24px;
+        font-size: calc(28px * var(--scale-global) * var(--scale-footer));
         line-height: 1.5;
         font-weight: 700;
+        z-index: 5;
       }
       .source-tag {
         position: absolute;
@@ -221,9 +229,8 @@
           {% endfor %}
         </div>
         </div>
-
-        <div class="footer">{{ contact_line }}</div>
       </div>
+      <div class="footer">{{ contact_line }}</div>
     </div>
   </body>
 </html>

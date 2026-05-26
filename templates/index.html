@@ -118,6 +118,32 @@
                 </label>
               </div>
             </div>
+            
+            <div>
+              <label class="mb-2 block text-sm font-semibold text-cream/85">Appearance Tuning (Scale)</label>
+              <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                <div>
+                  <label class="mb-1 flex justify-between text-[11px] uppercase tracking-[0.2em] text-cream/55"><span>Global Scale</span><span id="scale_global_val">1.0</span></label>
+                  <input type="range" name="scale_global" min="0.5" max="2.0" step="0.05" value="{{ default_request.scale_global }}" class="w-full accent-gold" oninput="document.getElementById('scale_global_val').innerText=Number(this.value).toFixed(2)">
+                </div>
+                <div>
+                  <label class="mb-1 flex justify-between text-[11px] uppercase tracking-[0.2em] text-cream/55"><span>Logo Scale</span><span id="scale_logo_val">1.0</span></label>
+                  <input type="range" name="scale_logo" min="0.5" max="2.0" step="0.05" value="{{ default_request.scale_logo }}" class="w-full accent-gold" oninput="document.getElementById('scale_logo_val').innerText=Number(this.value).toFixed(2)">
+                </div>
+                <div>
+                  <label class="mb-1 flex justify-between text-[11px] uppercase tracking-[0.2em] text-cream/55"><span>Header / Title</span><span id="scale_header_val">1.0</span></label>
+                  <input type="range" name="scale_header" min="0.5" max="2.0" step="0.05" value="{{ default_request.scale_header }}" class="w-full accent-gold" oninput="document.getElementById('scale_header_val').innerText=Number(this.value).toFixed(2)">
+                </div>
+                <div>
+                  <label class="mb-1 flex justify-between text-[11px] uppercase tracking-[0.2em] text-cream/55"><span>Content Text</span><span id="scale_text_val">1.0</span></label>
+                  <input type="range" name="scale_text" min="0.5" max="2.0" step="0.05" value="{{ default_request.scale_text }}" class="w-full accent-gold" oninput="document.getElementById('scale_text_val').innerText=Number(this.value).toFixed(2)">
+                </div>
+                <div>
+                  <label class="mb-1 flex justify-between text-[11px] uppercase tracking-[0.2em] text-cream/55"><span>Footer Scale</span><span id="scale_footer_val">1.0</span></label>
+                  <input type="range" name="scale_footer" min="0.5" max="2.0" step="0.05" value="{{ default_request.scale_footer }}" class="w-full accent-gold" oninput="document.getElementById('scale_footer_val').innerText=Number(this.value).toFixed(2)">
+                </div>
+              </div>
+            </div>
             <div class="flex flex-col gap-3 sm:flex-row">
               <button type="submit" class="inline-flex items-center justify-center rounded-2xl bg-gold px-5 py-3 text-sm font-bold uppercase tracking-[0.25em] text-slate-950 transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-70">
                 Generate Statuses
@@ -256,6 +282,22 @@
                 match.checked = true;
               }
             }
+            
+            form.scale_global.value = payload.scale_global || 1.0;
+            document.getElementById('scale_global_val').innerText = Number(form.scale_global.value).toFixed(2);
+            
+            form.scale_logo.value = payload.scale_logo || 1.0;
+            document.getElementById('scale_logo_val').innerText = Number(form.scale_logo.value).toFixed(2);
+            
+            form.scale_header.value = payload.scale_header || 1.0;
+            document.getElementById('scale_header_val').innerText = Number(form.scale_header.value).toFixed(2);
+            
+            form.scale_text.value = payload.scale_text || 1.0;
+            document.getElementById('scale_text_val').innerText = Number(form.scale_text.value).toFixed(2);
+            
+            form.scale_footer.value = payload.scale_footer || 1.0;
+            document.getElementById('scale_footer_val').innerText = Number(form.scale_footer.value).toFixed(2);
+
             form.scrollIntoView({ behavior: 'smooth', block: 'start' });
           });
         });
@@ -268,6 +310,22 @@
         form.location.value = defaultPreset.location;
         form.price.value = defaultPreset.price;
         form.key_features.value = defaultPreset.key_features;
+        
+        form.scale_global.value = defaultPreset.scale_global || 1.0;
+        document.getElementById('scale_global_val').innerText = Number(form.scale_global.value).toFixed(2);
+        
+        form.scale_logo.value = defaultPreset.scale_logo || 1.0;
+        document.getElementById('scale_logo_val').innerText = Number(form.scale_logo.value).toFixed(2);
+        
+        form.scale_header.value = defaultPreset.scale_header || 1.0;
+        document.getElementById('scale_header_val').innerText = Number(form.scale_header.value).toFixed(2);
+        
+        form.scale_text.value = defaultPreset.scale_text || 1.0;
+        document.getElementById('scale_text_val').innerText = Number(form.scale_text.value).toFixed(2);
+        
+        form.scale_footer.value = defaultPreset.scale_footer || 1.0;
+        document.getElementById('scale_footer_val').innerText = Number(form.scale_footer.value).toFixed(2);
+        
         showFeedback('Preset restored. Update the details and generate again.');
       });
 
